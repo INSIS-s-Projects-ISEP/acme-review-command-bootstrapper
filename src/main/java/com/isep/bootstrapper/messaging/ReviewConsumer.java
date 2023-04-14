@@ -1,6 +1,7 @@
 package com.isep.bootstrapper.messaging;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -9,6 +10,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import com.isep.bootstrapper.dto.mapper.ReviewMapper;
+import com.isep.bootstrapper.dto.message.ReviewMessage;
 import com.isep.bootstrapper.event.ReviewCreatedEvent;
 import com.isep.bootstrapper.event.ReviewDeletedEvent;
 import com.isep.bootstrapper.event.ReviewUpdatedEvent;
@@ -32,7 +34,7 @@ public class ReviewConsumer {
     public void reviewCreated(ReviewCreatedEvent reviewCreatedEvent, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException{
         
         try {
-            log.info("Review received: " + reviewCreatedEvent);
+            log.info("Review received: " + reviewCreatedEvent.getReviewId());
             commandGateway.send(reviewCreatedEvent);
             log.info("Review created: " + reviewCreatedEvent.getReviewId());
             channel.basicAck(tag, false);
@@ -74,5 +76,26 @@ public class ReviewConsumer {
             channel.basicNack(tag, false, true);
         }
     }
-    
+
+    @RabbitListener(queues = "#{rpcReviewQueue.name}", ackMode = "MANUAL")
+    public String rpcReview(String instanceId, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException{
+
+        log.info("RPC Review Request received: " + instanceId);
+        try {
+            List<Review> reviews = reviewRepository.findAll();
+            List<ReviewMessage> messages = reviewMapper.toMessageList(reviews);
+            String response = reviewMapper.toJson(messages);
+
+            log.info("RPC Review Request sent to: " + instanceId);
+            channel.basicAck(tag, false);
+            return response;
+        }
+        catch (Exception e) {
+            log.error("Error to send RPC Review Request to: " + instanceId);
+            channel.basicReject(tag, true);
+            return "";
+        }
+
+    }
+
 }

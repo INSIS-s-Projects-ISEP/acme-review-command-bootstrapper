@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 public class RabbitmqConfig {
 
@@ -21,6 +23,11 @@ public class RabbitmqConfig {
         return new Jackson2JsonMessageConverter();
     }
     
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new ObjectMapper();
+    }
+
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
         Jackson2JsonMessageConverter jackson2JsonMessageConverter) {
@@ -159,4 +166,36 @@ public class RabbitmqConfig {
         return BindingBuilder.bind(reviewCreatedForTemporaryVoteQueue).to(reviewCreatedForTemporaryVoteExchange);
     }
 
+    // Bootstrapper
+    // Product
+    @Bean
+    public FanoutExchange rpcProductExchange(){
+        return new FanoutExchange("rpc.product.review-command-bootstrapper");
+    }
+
+    @Bean
+    public Queue rpcProductQueue(){
+        return new Queue("rpc.product.review-command-bootstrapper", true, false, false);
+    }
+
+    @Bean
+    public Binding bindRpcProduct(FanoutExchange rpcProductExchange, Queue rpcProductQueue){
+        return BindingBuilder.bind(rpcProductQueue).to(rpcProductExchange);
+    }
+
+    // Review
+    @Bean
+    public FanoutExchange rpcReviewExchange(){
+        return new FanoutExchange("rpc.review.review-command-bootstrapper");
+    }
+
+    @Bean
+    public Queue rpcReviewQueue(){
+        return new Queue("rpc.review.review-command-bootstrapper", true, false, false);
+    }
+
+    @Bean
+    public Binding bindRpcReview(FanoutExchange rpcReviewExchange, Queue rpcReviewQueue){
+        return BindingBuilder.bind(rpcReviewQueue).to(rpcReviewExchange);
+    }
 }
