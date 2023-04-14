@@ -27,6 +27,7 @@ public class ReviewProjection {
             event.getReviewId(),
             event.getApprovalStatus(),
             event.getReviewText(),
+            event.getReport(),
             event.getPublishingDate(),
             event.getFunFact(),
             product,
@@ -47,7 +48,7 @@ public class ReviewProjection {
         review.setPublishingDate(event.getPublishingDate());
         review.setFunFact(event.getFunFact());
         review.setProduct(product);
-        review.setUser(event.getUser());
+        review.setUserr(event.getUser());
         review.setRate(event.getRate());
         
         reviewRepository.save(review);

@@ -2,6 +2,7 @@ package com.isep.reviewcommandbootstrapper.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,15 +32,17 @@ public class Review {
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
     private String reviewText;
+    private String report;
 
+    @Column(nullable = false)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate publishingDate = LocalDate.now();
     private String funFact;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-    private String user;
+    private String userr;
     private Double rate = 0.0;
 
 }
