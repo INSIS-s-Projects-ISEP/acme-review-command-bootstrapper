@@ -27,7 +27,7 @@ public class ReviewMapper {
 
         Product product = productRepository.findBySku(reviewMessage.getSku()).orElseThrow();
         return new Review(
-            reviewMessage.getIdReview(),
+            reviewMessage.getReviewId(),
             reviewMessage.getApprovalStatus(),
             reviewMessage.getReviewText(),
             reviewMessage.getReport(),

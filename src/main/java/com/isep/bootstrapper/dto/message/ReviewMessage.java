@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReviewMessage {
 
-    private UUID idReview;
+    private UUID reviewId;
     private ApprovalStatus approvalStatus;
     private String reviewText;
     private String report;

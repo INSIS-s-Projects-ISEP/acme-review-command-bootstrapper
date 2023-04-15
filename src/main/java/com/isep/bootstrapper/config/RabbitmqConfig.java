@@ -47,39 +47,6 @@ public class RabbitmqConfig {
         return event -> rabbitAdmin.initialize();
     }
 
-    // Product Created
-    @Bean
-    public FanoutExchange productCreatedExchange() {
-        return new FanoutExchange("product.product-created");
-    }
-
-    @Bean
-    public Queue productCreatedQueue(String intanceId) {
-        return new Queue("product.product-created.review-command-bootstrapper." + intanceId, true, true, true);
-    }
-
-    @Bean
-    public Binding bindingProductCreatedtoProductCreated(FanoutExchange productCreatedExchange,
-            Queue productCreatedQueue) {
-        return BindingBuilder.bind(productCreatedQueue).to(productCreatedExchange);
-    }
-
-    // Product Deleted
-    @Bean
-    public FanoutExchange productDeletedExchange(){
-        return new FanoutExchange("product.product-deleted");
-    }
-
-    @Bean
-    public Queue productDeletedQueue(String instanceId){
-        return new Queue("product.product-deleted.review-command-bootstrapper." + instanceId, true, true, true);
-    }
-
-    @Bean
-    public Binding bindingProductDeletedtoProductDeleted(FanoutExchange productDeletedExchange, Queue productDeletedQueue){
-        return BindingBuilder.bind(productDeletedQueue).to(productDeletedExchange);
-    }
-
     // Review Created
     @Bean
     public FanoutExchange reviewCreatedExchange() {
