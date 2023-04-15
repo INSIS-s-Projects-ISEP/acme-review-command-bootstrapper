@@ -1,5 +1,7 @@
 package com.isep.bootstrapper.model;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -17,7 +19,7 @@ import lombok.ToString;
 public class Product {
     
     @Id
-    private Long productId;
+    private UUID productId;
     private String sku;
 
 }

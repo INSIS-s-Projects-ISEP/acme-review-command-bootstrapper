@@ -1,6 +1,7 @@
 package com.isep.bootstrapper.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ import lombok.Setter;
 public class Review {
     
     @Id
-    private Long reviewId;
+    private UUID reviewId;
 
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;

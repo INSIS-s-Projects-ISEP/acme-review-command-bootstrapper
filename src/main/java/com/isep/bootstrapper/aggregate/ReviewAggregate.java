@@ -1,6 +1,7 @@
 package com.isep.bootstrapper.aggregate;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -25,7 +26,7 @@ import lombok.Setter;
 public class ReviewAggregate {
     
     @AggregateIdentifier
-    private Long reviewId;
+    private UUID reviewId;
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
     private String reviewText;
     private LocalDate publishingDate = LocalDate.now();
