@@ -54,8 +54,8 @@ public class RabbitmqConfig {
     }
     
     @Bean
-    public Queue reviewCreatedQueue(String intanceId) {
-        return new Queue("review.review-created.review-command-bootstrapper." + intanceId, true, true, true);
+    public Queue reviewCreatedQueue() {
+        return new Queue("review.review-created.review-command-bootstrapper");
     }
 
     @Bean
@@ -71,8 +71,8 @@ public class RabbitmqConfig {
     }
     
     @Bean
-    public Queue reviewUpdatedQueue(String intanceId) {
-        return new Queue("review.review-updated.review-command-bootstrapper." + intanceId, true, true, true);
+    public Queue reviewUpdatedQueue() {
+        return new Queue("review.review-updated.review-command-bootstrapper");
     }
 
     @Bean
@@ -88,8 +88,8 @@ public class RabbitmqConfig {
     }
     
     @Bean
-    public Queue reviewDeletedQueue(String intanceId) {
-        return new Queue("review.review-deleted.review-command-bootstrapper." + intanceId, true, true, true);
+    public Queue reviewDeletedQueue() {
+        return new Queue("review.review-deleted.review-command-bootstrapper");
     }
 
     @Bean
@@ -106,8 +106,8 @@ public class RabbitmqConfig {
     }
 
     @Bean
-    public Queue temporaryVoteCreatedQueue(String instanceId) {
-        return new Queue("temporary-vote.temporary-vote-created.review-command-bootstrapper", true, false, false);
+    public Queue temporaryVoteCreatedQueue() {
+        return new Queue("temporary-vote.temporary-vote-created.review-command-bootstrapper");
     }
 
     @Bean
@@ -123,8 +123,8 @@ public class RabbitmqConfig {
     }
 
     @Bean
-    public Queue reviewCreatedForTemporaryVoteQueue(String instanceId) {
-        return new Queue("review.review-created-for-temporary-vote.review-command-bootstrapper." + instanceId, true, true, true);
+    public Queue reviewCreatedForTemporaryVoteQueue() {
+        return new Queue("review.review-created-for-temporary-vote.review-command-bootstrapper");
     }
 
     @Bean
@@ -142,7 +142,7 @@ public class RabbitmqConfig {
 
     @Bean
     public Queue rpcProductQueue(){
-        return new Queue("rpc.product.review-command-bootstrapper", true, false, false);
+        return new Queue("rpc.product.review-command-bootstrapper");
     }
 
     @Bean
@@ -158,7 +158,7 @@ public class RabbitmqConfig {
 
     @Bean
     public Queue rpcReviewQueue(){
-        return new Queue("rpc.review.review-command-bootstrapper", true, false, false);
+        return new Queue("rpc.review.review-command-bootstrapper");
     }
 
     @Bean
